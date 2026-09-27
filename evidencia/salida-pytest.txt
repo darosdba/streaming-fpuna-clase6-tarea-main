@@ -1,0 +1,17 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-8.4.2, pluggy-1.6.0 -- /home/claude/tarea3/.venv/bin/python3
+collecting ... collected 13 items
+tests/test_assignment.py::test_parse_utc_returns_timezone_aware_datetime PASSED [  7%]
+tests/test_assignment.py::test_assign_fixed_window_uses_event_time PASSED [ 15%]
+tests/test_assignment.py::test_duplicate_does_not_change_total PASSED    [ 23%]
+tests/test_assignment.py::test_deduplication_is_isolated_by_merchant PASSED [ 30%]
+tests/test_assignment.py::test_stateful_dofn_keeps_keys_isolated PASSED  [ 38%]
+tests/test_assignment.py::test_out_of_order_event_uses_its_event_time_window PASSED [ 46%]
+tests/test_assignment.py::test_late_event_within_tolerance_is_a_revision PASSED [ 53%]
+tests/test_assignment.py::test_event_beyond_lateness_is_audited PASSED   [ 61%]
+tests/test_assignment.py::test_windowed_pipeline_produces_totals PASSED  [ 69%]
+tests/test_assignment.py::test_trigger_policy_has_lateness_and_accumulating_panes PASSED [ 76%]
+tests/test_assignment.py::test_retries_converge_to_one_materialized_entity PASSED [ 84%]
+tests/test_assignment.py::test_append_only_sink_materializes_every_attempt PASSED [ 92%]
+tests/test_assignment.py::test_timer_handler_clears_state PASSED         [100%]
+============================== 13 passed in 2.28s ==============================

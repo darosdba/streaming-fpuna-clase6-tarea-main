@@ -1,0 +1,34 @@
+======================================================================
+EVIDENCIA DE EJECUCION - Tarea 3
+======================================================================
+eventos de entrada: 9
+eventos aceptados : 5
+totales producidos: 4
+
+--- Auditoria por evento ---
+event_id  merchant  delay  acc  dup  late  rev reason
+p-001     m-azul        1 True False False False accepted
+p-002     m-verde       2 True False False False accepted
+p-003     m-azul        2 False False False False status
+p-004     m-azul       53 True False False True accepted
+p-002     m-verde      83 False True False False duplicate
+p-005     m-verde       2 True False False False accepted
+p-006     m-azul        1 True False False False accepted
+p-007     m-verde     169 False False  True False too_late
+p-008     m-azul        3 False False False False status
+
+--- Totales confirmados por comercio y ventana ---
+m-azul   2026-07-24T13:00:00+00:00 .. 2026-07-24T13:01:00+00:00  total=170000
+m-azul   2026-07-24T13:02:00+00:00 .. 2026-07-24T13:03:00+00:00  total=200000
+m-verde  2026-07-24T13:00:00+00:00 .. 2026-07-24T13:01:00+00:00  total=80000
+m-verde  2026-07-24T13:01:00+00:00 .. 2026-07-24T13:02:00+00:00  total=90000
+
+--- Pipeline Beam windowed (misma entrada CONFIRMED) ---
+{'merchant_id': 'm-azul', 'window_start': '2026-07-24T13:00:00+00:00', 'window_end': '2026-07-24T13:01:00+00:00', 'total': 170000}
+{'merchant_id': 'm-verde', 'window_start': '2026-07-24T13:01:00+00:00', 'window_end': '2026-07-24T13:02:00+00:00', 'total': 90000}
+{'merchant_id': 'm-verde', 'window_start': '2026-07-24T13:00:00+00:00', 'window_end': '2026-07-24T13:01:00+00:00', 'total': 190000}
+{'merchant_id': 'm-azul', 'window_start': '2026-07-24T13:02:00+00:00', 'window_end': '2026-07-24T13:03:00+00:00', 'total': 200000}
+
+--- Reintentos de sink idempotente vs append-only ---
+UPSERT: 8 intentos -> 4 filas materializadas
+POST  : 8 intentos -> 8 filas materializadas
