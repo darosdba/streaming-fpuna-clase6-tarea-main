@@ -1,0 +1,17 @@
+Al completar la Tarea 3 quiero comentarle una observacion sobre la suite de pruebas provista, por si resulta útil,
+
+El test test_trigger_policy_has_lateness_and_accumulating_panes verifica la politica de ventanas accediendo a:
+
+- policy.windowing.windowfn.size.seconds
+- policy.windowing.allowed_lateness.seconds
+
+Esos dos objetos son instancias de apache_beam.utils.timestamp.Duration, y esa clase almacena el intervalo en microsegundos (atributo .micros) pero no expone un atributo .seconds. Lo verifique en el codigo fuente de Apache Beam desde la version 2.20 hasta la rama master, incluida la 2.74.0 que fija el pyproject.toml del proyecto base: en ninguna version publicada Duration tiene .seconds, y en Timestamp .seconds es un metodo, no una propiedad. Con esa configuracion, el test falla con AttributeError independientemente de la implementacion del alumno.
+
+Para dejar la suite completamente verde sin modificar los tests provistos, hice que build_trigger_policy devuelva las duraciones mediante una subclase minima de Duration que agrega .seconds como propiedad de solo lectura (micros // 1_000_000). No cambia el comportamiento del windowing; solo lo hace inspeccionable en segundos, que es justo lo que el test comprueba. Lo documente en el README de mi repositorio.
+
+Queria dejarlo asentado por transparencia, y quedo a disposicion por si prefiere que ajuste la solucion de otra manera o si el test se corrige en el proyecto base.
+
+Mi repositorio: https://github.com/darosdba/streaming-fpuna-clase6-tarea-main
+
+Saludos cordiales,
+Celso
